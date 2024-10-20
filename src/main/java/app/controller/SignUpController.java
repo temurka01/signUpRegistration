@@ -13,11 +13,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @Component
-public class RegisterController implements Controller {
+public class SignUpController implements Controller {
     private final AccountService accountService;
 
     @Autowired
-    public RegisterController(AccountService accountService) {
+    public SignUpController(AccountService accountService) {
         this.accountService = accountService;
     }
 
@@ -25,25 +25,23 @@ public class RegisterController implements Controller {
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
         ModelAndView modelAndView = new ModelAndView();
         if (request.getMethod().equalsIgnoreCase("post")) {
-            accountService.register(RegistrationDto.builder()
-                    .firstName(request.getParameter("firstName"))
-                    .lastName(request.getParameter("lastName"))
-                    .login(request.getParameter("login"))
-                    .password(request.getParameter("password"))
-                    .build());
-            modelAndView.setViewName("profile");
             Account account = accountService.signUp(SignUpDto.builder()
                     .login(request.getParameter("login"))
                     .password(request.getParameter("password"))
                     .build());
-            modelAndView.addObject("account", RegistrationDto.builder()
-                    .login(account.getLogin())
-                    .firstName(account.getFirstName())
-                    .lastName(account.getLastName())
-                    .password(account.getPassword())
-                    .build());
+            if (account != null) {
+                modelAndView.setViewName("profile");
+                modelAndView.addObject("account", RegistrationDto.builder()
+                        .login(account.getLogin())
+                        .firstName(account.getFirstName())
+                        .lastName(account.getLastName())
+                        .password(account.getPassword())
+                        .build());
+            } else {
+                modelAndView.setViewName("signUp");
+            }
         } else {
-            modelAndView.setViewName("register");
+            modelAndView.setViewName("signUp");
         }
         return modelAndView;
     }

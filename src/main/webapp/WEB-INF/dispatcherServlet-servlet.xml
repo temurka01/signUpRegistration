@@ -6,4 +6,5 @@
 
     <context:component-scan base-package="app"/>
     <bean id="/register" class = "app.controller.RegisterController"/>
+    <bean id="/signUp" class = "app.controller.SignUpController"/>
 </beans>

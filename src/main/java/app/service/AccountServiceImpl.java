@@ -1,7 +1,7 @@
 package app.service;
 
 import app.dto.RegistrationDto;
-import app.dto.signUpDto;
+import app.dto.SignUpDto;
 import app.model.Account;
 import app.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,18 +19,18 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public void register(RegistrationDto dto) {
         accountRepository.register(Account.builder()
-                        .firstName(dto.getFirstName())
-                        .lastName(dto.getLastName())
-                        .password(dto.getPassword())
-                        .login(dto.getLogin())
-                        .build());
+                .firstName(dto.getFirstName())
+                .lastName(dto.getLastName())
+                .password(dto.getPassword())
+                .login(dto.getLogin())
+                .build());
     }
 
     @Override
-    public Account signUp(signUpDto dto) {
+    public Account signUp(SignUpDto dto) {
         return accountRepository.signUp(Account.builder()
-                        .login(dto.getLogin())
-                        .password(dto.getPassword())
-                        .build());
+                .login(dto.getLogin())
+                .password(dto.getPassword())
+                .build());
     }
 }
